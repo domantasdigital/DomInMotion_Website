@@ -36,7 +36,7 @@ const LetsCreateLink = ({ onClick }: { onClick?: () => void }) => (
   <a
     href="#contact"
     onClick={onClick}
-    className="group inline-flex items-center gap-3 rounded-full bg-black px-4 py-2.5 text-[0.64rem] font-bold uppercase tracking-[0.3em] text-white transition duration-300 hover:bg-plum focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral sm:px-6 sm:text-[0.7rem] lg:px-7"
+    className="group inline-flex items-center gap-3 rounded-full bg-black px-4 py-2.5 text-[0.64rem] font-bold uppercase tracking-[0.3em] text-white transition duration-300 hover:bg-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral sm:px-6 sm:text-[0.7rem] lg:px-7"
   >
     <span>Let&apos;s create!</span>
     <ArrowLongRightIcon className="h-6 w-6 transition duration-300 group-hover:translate-x-1" />
