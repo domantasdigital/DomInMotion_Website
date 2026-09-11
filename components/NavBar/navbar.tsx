@@ -6,6 +6,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import SocialLinks from "@/components/SocialLinks/SocialLinks";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -130,23 +131,30 @@ export default function NavBar() {
 
       <div
         id="mobile-navigation"
-        className={`fixed inset-0 z-[110] min-h-dvh bg-[radial-gradient(circle_at_50%_22%,rgba(223,217,232,0.94)_0%,rgba(186,176,202,0.94)_68%)] px-8 pt-24 backdrop-blur-2xl transition duration-500 lg:hidden ${
+        className={`fixed inset-0 z-[110] h-dvh overflow-y-auto bg-[radial-gradient(circle_at_50%_22%,rgba(223,217,232,0.94)_0%,rgba(186,176,202,0.94)_68%)] px-6 pt-20 backdrop-blur-2xl transition duration-500 sm:px-10 sm:pt-24 lg:hidden ${
           isOpen
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-6 opacity-0"
         }`}
       >
-        <div className="flex h-full flex-col justify-center gap-8 pb-20">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setIsOpen(false)}
-              className="font-heading text-5xl uppercase leading-none text-black transition duration-300 hover:translate-x-3 hover:text-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral sm:text-7xl"
-            >
-              {item.label}
-            </a>
-          ))}
+        <div className="flex min-h-full flex-col">
+          <div className="flex min-h-0 flex-1 flex-col justify-center gap-[clamp(0.65rem,2.5vh,2rem)] py-4 text-[clamp(2.15rem,min(10vw,8vh),4.5rem)]">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className="font-heading uppercase leading-[0.95] text-black transition duration-300 hover:translate-x-3 hover:text-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <SocialLinks
+            onLinkClick={() => setIsOpen(false)}
+            className="flex shrink-0 items-center gap-6 border-t-2 border-black/15 py-5 text-base font-bold"
+          />
         </div>
       </div>
     </>
