@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import AvatarExperience from "./AvatarExperience";
 
-export default function Scene() {
+export default function Scene({ onAvatarReady }) {
   return (
     <Canvas
       shadows
@@ -15,7 +15,7 @@ export default function Scene() {
       }}
       camera={{ position: [0.03, 0.35, 1.1], fov: 45 }}
     >
-      <AvatarExperience />
+      <AvatarExperience onAvatarReady={onAvatarReady} />
     </Canvas>
   );
 }

@@ -50,8 +50,129 @@ h6 {
   animation: watch-button-nudge 4s ease-in-out infinite;
 }
 
+.loader-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: #dfd9e8;
+  color: #311847;
+  opacity: 1;
+  transition:
+    opacity 320ms ease,
+    visibility 0s linear 320ms;
+}
+
+.loader-screen[data-ready="true"] {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.loader-content {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  width: min(82vw, 21rem);
+}
+
+.loader-content p {
+  margin: 0;
+  font-family: var(--font-bevan), Georgia, serif;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.loader-progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.loader-progress-bar {
+  height: 0.9rem;
+  overflow: hidden;
+  border: 2px solid #161019;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 2px 3px 0 #161019;
+}
+
+.loader-progress-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #47e5bc, #30bced, #ff5376, #ffe74c);
+  transition: width 180ms ease-out;
+}
+
+.loader-progress-value {
+  min-width: 3.25rem;
+  font-family: var(--font-bevan), Georgia, serif;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.loader-dots {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.55rem, 2vw, 0.85rem);
+  height: 3.5rem;
+}
+
+.loader-dots span {
+  width: clamp(1rem, 3vw, 1.35rem);
+  aspect-ratio: 1;
+  border: 2px solid #161019;
+  border-radius: 50%;
+  box-shadow: 2px 3px 0 #161019;
+  animation: loader-dot-bounce 850ms ease-in-out infinite alternate;
+}
+
+.loader-dots span:nth-child(1) {
+  background: #47e5bc;
+}
+
+.loader-dots span:nth-child(2) {
+  background: #30bced;
+  animation-delay: 120ms;
+}
+
+.loader-dots span:nth-child(3) {
+  background: #ff5376;
+  animation-delay: 240ms;
+}
+
+.loader-dots span:nth-child(4) {
+  background: #ffe74c;
+  animation-delay: 360ms;
+}
+
+.loader-dots span:nth-child(5) {
+  background: #311847;
+  animation-delay: 480ms;
+}
+
+@keyframes loader-dot-bounce {
+  0%,
+  35% {
+    transform: translateY(0) scale(1, 0.9);
+  }
+  100% {
+    transform: translateY(-1.35rem) scale(0.92, 1.08);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero-watch-button {
+  .hero-watch-button,
+  .loader-dots span {
     animation: none;
+  }
+
+  .loader-screen,
+  .loader-progress-bar span {
+    transition: none;
   }
 }

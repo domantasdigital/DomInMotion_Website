@@ -1,11 +1,18 @@
+"use client";
+
+import { useCallback, useState } from "react";
 import Image from "next/image";
 import { PlayIcon } from "@heroicons/react/20/solid";
 import desktopArtwork from "@/public/images/bgdesktop.png";
 import mobileArtwork from "@/public/images/bgmobile2.png";
 import SocialLinks from "@/components/SocialLinks/SocialLinks";
+import Loader from "@/components/Loader/Loader";
 import Scene from "./3DAvatar/Scene";
 
 const Hero = () => {
+  const [avatarReady, setAvatarReady] = useState(false);
+  const handleAvatarReady = useCallback(() => setAvatarReady(true), []);
+
   return (
     <section
       id="home"
@@ -41,7 +48,7 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 mx-auto h-dvh max-w-7xl">
-        <Scene />
+        <Scene onAvatarReady={handleAvatarReady} />
       </div>
 
       <div className="absolute inset-x-0 bottom-5 z-20 flex items-end justify-center gap-4 px-4 sm:bottom-8 sm:px-8 lg:bottom-10 lg:justify-between lg:px-11">
@@ -58,6 +65,8 @@ const Hero = () => {
 
         <SocialLinks className="hidden items-center gap-5 pb-3 text-base font-bold lg:flex" />
       </div>
+
+      <Loader isReady={avatarReady} />
     </section>
   );
 };
