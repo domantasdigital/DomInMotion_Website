@@ -31,3 +31,27 @@ h5,
 h6 {
   font-family: var(--font-bevan), Georgia, serif;
 }
+
+@keyframes watch-button-nudge {
+  0%,
+  82%,
+  100% {
+    transform: translateX(0);
+  }
+  88% {
+    transform: translateX(4px);
+  }
+  94% {
+    transform: translateX(-2px);
+  }
+}
+
+.hero-watch-button {
+  animation: watch-button-nudge 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-watch-button {
+    animation: none;
+  }
+}
