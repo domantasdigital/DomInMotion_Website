@@ -69,7 +69,7 @@ export default function NavBar() {
     <>
       <nav
         aria-label="Primary navigation"
-        className={`relative z-[120] transition-all duration-500 ${
+        className={`relative z-[120] font-sans font-bold transition-all duration-500 ${
           isScrolled
             ? "bg-white shadow-[0_18px_70px_rgba(49,24,71,0.18)] ring-1 ring-white/70 backdrop-blur-2xl"
             : "bg-transparent"
@@ -90,7 +90,7 @@ export default function NavBar() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm font-bold uppercase tracking-tight text-black transition duration-300 hover:text-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
+                className="text-sm font-bold uppercase tracking-[0.12em] text-black decoration-2 underline-offset-4 transition duration-300 hover:text-coral hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
               >
                 {item.label}
               </a>
@@ -131,7 +131,7 @@ export default function NavBar() {
 
       <div
         id="mobile-navigation"
-        className={`fixed inset-0 z-[110] h-dvh overflow-y-auto bg-[radial-gradient(circle_at_50%_22%,rgba(223,217,232,0.94)_0%,rgba(186,176,202,0.94)_68%)] px-6 pt-20 backdrop-blur-2xl transition duration-500 sm:px-10 sm:pt-24 lg:hidden ${
+        className={`fixed inset-0 z-[110] h-dvh overflow-y-auto bg-[radial-gradient(circle_at_50%_22%,rgba(223,217,232,0.94)_0%,rgba(186,176,202,0.94)_68%)] px-6 pt-20 font-sans font-bold backdrop-blur-2xl transition duration-500 sm:px-10 sm:pt-24 lg:hidden ${
           isOpen
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-6 opacity-0"
@@ -144,7 +144,7 @@ export default function NavBar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="font-heading uppercase leading-[0.95] text-black transition duration-300 hover:translate-x-3 hover:text-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
+                className="uppercase leading-[0.95] tracking-[0.12em] text-black decoration-[0.12em] underline-offset-[0.14em] transition duration-300 hover:translate-x-3 hover:text-coral hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
               >
                 {item.label}
               </a>
