@@ -20,6 +20,9 @@
 # production
 /build
 
+# Original, uncompressed portfolio videos (keep local)
+/public/videos/portfolio/old/
+
 # misc
 .DS_Store
 *.pem
