@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowsPointingOutIcon, ChevronLeftIcon, ChevronRightIcon, MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { PortfolioPiece } from "@/lib/portfolio";
+import BufferedVideo from "./BufferedVideo";
 import styles from "./Portfolio.module.css";
 
 function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
@@ -24,8 +25,11 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
     if (!video) return;
     setFullscreenError(false);
     try {
-      if (video.requestFullscreen) await video.requestFullscreen();
-      else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+      if (video.parentElement?.requestFullscreen) await video.parentElement.requestFullscreen();
+      else if (video.webkitEnterFullscreen) {
+        video.controls = true;
+        video.webkitEnterFullscreen();
+      }
       else setFullscreenError(true);
     } catch {
       setFullscreenError(true);
@@ -48,18 +52,7 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
       </div>
 
       {piece.type === "video" ? (
-        <div className={styles.videoStage}>
-          <video
-            ref={videoRef}
-            src={piece.src}
-            poster={piece.thumbnail || piece.preview || undefined}
-            controls
-            playsInline
-            preload="metadata"
-            aria-label={`${piece.title}. ${piece.alt}`}
-            onError={() => setMediaError(true)}
-          >Your browser does not support embedded video. <a href={piece.src}>Open the video</a>.</video>
-        </div>
+        <BufferedVideo piece={piece} videoRef={videoRef} onError={() => setMediaError(true)} />
       ) : (
         <div ref={viewportRef} className={styles.imageViewport} style={{ aspectRatio: imageRatio }} data-zoom-viewport tabIndex={0} role="region" aria-label="Image viewer. When zoomed, scroll to explore the image.">
           <button

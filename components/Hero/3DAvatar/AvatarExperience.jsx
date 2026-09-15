@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import Model from "./Model";
 
 function ModelFallback() {
@@ -25,19 +25,10 @@ function SceneReady({ onReady }) {
 
 export default function Experience({ onAvatarReady }) {
   return (
-    <>
-      <OrbitControls
-        target={[0.015, 0.35, 0]}
-        enableRotate={false}
-        enablePan={false}
-        enableZoom={false}
-      />
-
-      <Suspense fallback={<ModelFallback />}>
-        <Model position={[0, 0, 0]} />
-        <Environment files="/kiara_1_dawn_1k.hdr" />
-        <SceneReady onReady={onAvatarReady} />
-      </Suspense>
-    </>
+    <Suspense fallback={<ModelFallback />}>
+      <Model position={[0, 0, 0]} />
+      <Environment files="/kiara_1_dawn_1k.hdr" />
+      <SceneReady onReady={onAvatarReady} />
+    </Suspense>
   );
 }
