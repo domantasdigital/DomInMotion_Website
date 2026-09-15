@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   ArrowLongRightIcon,
   Bars3Icon,
@@ -9,10 +10,10 @@ import {
 import SocialLinks from "@/components/SocialLinks/SocialLinks";
 
 const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "About", href: "/#about" },
+  { label: "Portfolio", href: "/#portfolio" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Logo = () => (
@@ -34,14 +35,14 @@ const Logo = () => (
 );
 
 const LetsCreateLink = ({ onClick }: { onClick?: () => void }) => (
-  <a
-    href="#contact"
+  <Link
+    href="/contact"
     onClick={onClick}
     className="group inline-flex items-center gap-3 rounded-full bg-black px-4 py-2.5 text-[0.64rem] font-bold uppercase tracking-[0.3em] text-white transition duration-300 hover:bg-coral focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral sm:px-6 sm:text-[0.7rem] lg:px-7"
   >
     <span>Let&apos;s create!</span>
     <ArrowLongRightIcon className="h-6 w-6 transition duration-300 group-hover:translate-x-1" />
-  </a>
+  </Link>
 );
 
 export default function NavBar() {
@@ -76,24 +77,24 @@ export default function NavBar() {
         }`}
       >
         <div className="mx-auto grid h-16 w-full grid-cols-[auto_1fr_auto] items-center gap-3 px-6 sm:h-[4.5rem] sm:px-10 lg:h-20 lg:grid-cols-[1fr_auto_1fr] lg:px-11">
-          <a
-            href="#home"
+          <Link
+            href="/#home"
             aria-label="DOM IN MOTION home"
             className="inline-flex w-fit items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
             onClick={() => setIsOpen(false)}
           >
             <Logo />
-          </a>
+          </Link>
 
           <div className="hidden items-center gap-12 justify-self-center lg:flex">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="text-sm font-bold uppercase tracking-[0.12em] text-black decoration-2 underline-offset-4 transition duration-300 hover:text-coral hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -140,14 +141,14 @@ export default function NavBar() {
         <div className="flex min-h-full flex-col">
           <div className="flex min-h-0 flex-1 flex-col justify-center gap-[clamp(0.65rem,2.5vh,2rem)] py-4 text-[clamp(2.15rem,min(10vw,8vh),4.5rem)]">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className="uppercase leading-[0.95] tracking-[0.12em] text-black decoration-[0.12em] underline-offset-[0.14em] transition duration-300 hover:translate-x-3 hover:text-coral hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
