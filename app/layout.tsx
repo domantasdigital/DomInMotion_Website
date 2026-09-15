@@ -28,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${bevan.variable} ${pontanoSans.variable} h-full`}
     >
       <body id="top" className="min-h-full flex flex-col">

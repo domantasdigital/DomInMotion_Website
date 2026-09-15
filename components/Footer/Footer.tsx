@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { ArrowUpIcon, ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import SocialLinks from "@/components/SocialLinks/SocialLinks";
+import SectionLink from "@/components/SectionLink/SectionLink";
 import styles from "./Footer.module.css";
 
 function StarSticker() {
@@ -42,9 +42,9 @@ export default function Footer() {
           </div>
 
           <nav className={styles.navigation} aria-label="Footer navigation">
-            <Link href="/#portfolio">The work</Link>
-            <Link href="/#about">About me</Link>
-            <Link href="/contact">Let&apos;s talk</Link>
+            <SectionLink href="/#portfolio">The work</SectionLink>
+            <SectionLink href="/#about">About me</SectionLink>
+            <SectionLink href="/#contact">Let&apos;s talk</SectionLink>
           </nav>
 
           <div className={styles.socialColumn}>
@@ -53,9 +53,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <Link className={styles.wordmark} href="/#home" aria-label="DOM IN MOTION home">
+        <SectionLink className={styles.wordmark} href="/#home" aria-label="DOM IN MOTION home">
           DOM IN MOTION<span className={styles.wordmarkDot} aria-hidden="true">✦</span>
-        </Link>
+        </SectionLink>
 
         <div className={styles.bottom}>
           <p>© {new Date().getFullYear()} DOM IN MOTION</p>

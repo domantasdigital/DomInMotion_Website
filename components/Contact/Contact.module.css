@@ -9,11 +9,6 @@
   scroll-margin-top: 5rem;
 }
 
-.standalone {
-  min-height: 100svh;
-  padding-top: clamp(7rem, 10vw, 10rem);
-}
-
 .section::before {
   position: absolute;
   inset: 0;

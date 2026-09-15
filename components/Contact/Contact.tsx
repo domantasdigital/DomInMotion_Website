@@ -34,14 +34,9 @@ const contactLinks = [
   },
 ];
 
-export default function Contact({
-  standalone = false,
-}: {
-  standalone?: boolean;
-}) {
+export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const artworkRef = useRef<HTMLDivElement>(null);
-  const Heading = standalone ? "h1" : "h2";
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -161,19 +156,19 @@ export default function Contact({
       id="contact"
       ref={sectionRef}
       aria-labelledby="contact-heading"
-      className={`${styles.section} ${standalone ? styles.standalone : ""}`}
+      className={styles.section}
     >
       <div className={`${styles.inner} `}>
         <div className={styles.layout}>
           <div className={styles.intro}>
-            <Heading id="contact-heading" className={styles.heading}>
+            <h2 id="contact-heading" className={styles.heading}>
               <span className={styles.headingLine}>
                 <span data-contact-heading>Let&apos;s</span>
               </span>
               <span className={styles.headingLine}>
                 <span data-contact-heading>talk!</span>
               </span>
-            </Heading>
+            </h2>
             <p className={styles.description}>
               Got an idea that needs a little motion?
               <br />
@@ -189,7 +184,6 @@ export default function Contact({
                   alt="A bright red rotary telephone with glass CONTACT lettering on a turquoise background"
                   sizes="(max-width: 760px) 90vw, (max-width: 1280px) 45vw, 550px"
                   placeholder="blur"
-                  preload={standalone}
                   draggable={false}
                   className={styles.photo}
                 />

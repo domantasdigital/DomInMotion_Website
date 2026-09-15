@@ -5,6 +5,10 @@
   --foreground: #311847;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -166,6 +170,11 @@ h6 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    /* Override the router's restored inline scroll behavior as well. */
+    scroll-behavior: auto !important;
+  }
+
   .hero-watch-button,
   .loader-dots span {
     animation: none;
