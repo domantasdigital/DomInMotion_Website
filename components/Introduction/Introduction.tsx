@@ -81,7 +81,7 @@ export default function Introduction() {
   return (
     <section
       ref={sectionRef}
-      id="about"
+      id="introduction"
       aria-labelledby="introduction-heading"
       className={styles.section}
     >

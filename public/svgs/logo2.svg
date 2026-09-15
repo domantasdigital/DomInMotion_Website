@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.35 41.3">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6bc6ae;
+      }
+
+      .cls-2 {
+        fill: #f05477;
+        font-family: Bevan-Regular, Bevan;
+        font-size: 33.5px;
+      }
+    </style>
+  </defs>
+  <text class="cls-2" transform="translate(0 29.77)"><tspan x="0" y="0">D</tspan></text>
+  <circle class="cls-1" cx="24.89" cy="6.35" r="5.46"/>
+</svg>
