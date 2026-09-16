@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { getImageProps } from "next/image";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Introduction.module.css";
+import introductionPoster from "@/public/images/introduction_thmbnail.png";
+
+const { props: poster } = getImageProps({
+  src: introductionPoster,
+  alt: "",
+  width: 960,
+  height: Math.round(960 * introductionPoster.height / introductionPoster.width),
+});
 
 export default function Introduction() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -12,6 +21,21 @@ export default function Introduction() {
   const playRef = useRef<HTMLButtonElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [playbackError, setPlaybackError] = useState(false);
+  const [loadPoster, setLoadPoster] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // A video poster otherwise downloads immediately, competing with the hero.
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setLoadPoster(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "200px" });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -119,7 +143,7 @@ export default function Introduction() {
               controls
               playsInline
               preload="none"
-              poster="/images/introduction_thmbnail.png"
+              poster={loadPoster ? poster.src : undefined}
               aria-label="An introduction to Dom, the human behind DOM IN MOTION"
               tabIndex={0}
               onPlay={handlePlay}
@@ -140,20 +164,20 @@ export default function Introduction() {
           </div>
         </div>
 
-        {!hasStarted && (
-          <div className={styles.playActions}>
-            <button
-              ref={playRef}
-              type="button"
-              className={styles.playButton}
-              onClick={playIntroduction}
-              aria-label="Play introduction video"
-            >
-              <PlayIcon aria-hidden="true" />
-              <span>Meet Dom</span>
-            </button>
-          </div>
-        )}
+        <div className={styles.playActions}>
+          <button
+            ref={playRef}
+            type="button"
+            className={styles.playButton}
+            style={{ visibility: hasStarted ? "hidden" : "visible" }}
+            disabled={hasStarted}
+            onClick={playIntroduction}
+            aria-label="Play introduction video"
+          >
+            <PlayIcon aria-hidden="true" />
+            <span>Meet Dom</span>
+          </button>
+        </div>
 
         {playbackError && (
           <p className={styles.error} role="alert">

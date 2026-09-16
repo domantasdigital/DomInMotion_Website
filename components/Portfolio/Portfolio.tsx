@@ -2,14 +2,16 @@
 
 import { useCallback, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { ArrowUpRightIcon, PhotoIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { gsap } from "gsap";
 import { Flip } from "gsap/Flip";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { portfolioPageSize, portfolioPieces, portfolioTags, type PortfolioPiece } from "@/lib/portfolio";
-import PortfolioViewer from "./PortfolioViewer";
 import styles from "./Portfolio.module.css";
+
+const PortfolioViewer = dynamic(() => import("./PortfolioViewer"), { ssr: false });
 
 const sortedPieces = [...portfolioPieces].sort((a, b) => b.priority - a.priority);
 const tags = [...new Set([...portfolioTags, ...portfolioPieces.flatMap((piece) => piece.tags)])];
@@ -41,15 +43,15 @@ function Preview({ piece }: { piece: PortfolioPiece }) {
         src={src}
         alt={piece.alt}
         fill
-        sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
-        // Catalog URLs may also be externally hosted custom thumbnails.
-        unoptimized
+        sizes="(max-width: 600px) calc(100vw - 40px), (max-width: 960px) calc((100vw - 72px) / 2), (max-width: 1328px) calc((100vw - 96px) / 3), 410px"
+        // Local artwork is optimized; arbitrary external catalog URLs remain supported.
+        unoptimized={!src.startsWith("/") || src.startsWith("//")}
         onError={() => setCandidate((index) => index + 1)}
       />
     );
   }
 
-  if (piece.type === "video" && !videoFailed) {
+  if (piece.type === "video" && !piece.vimeoUrl && !videoFailed) {
     return <video ref={videoRef} muted playsInline preload="metadata" aria-label={piece.alt} onError={() => setVideoFailed(true)} />;
   }
 

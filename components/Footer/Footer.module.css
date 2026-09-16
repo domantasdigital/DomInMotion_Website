@@ -294,10 +294,11 @@
 
   .intro {
     grid-column: 1 / -1;
+    grid-row: 2;
   }
 
   .intro h2 {
-    max-width: calc(100% - 5rem);
+    max-width: none;
     font-size: clamp(1.75rem, 7vw, 2.3rem);
   }
 
@@ -311,9 +312,9 @@
   }
 
   .sticker {
-    position: absolute;
-    top: 2.3rem;
-    right: 0.5rem;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
     width: 7rem;
   }
 
@@ -325,13 +326,14 @@
 
   .navigation {
     grid-column: 1 / -1;
+    grid-row: 3;
     padding-right: 7.25rem;
     gap: 0.2rem 1rem;
   }
 
   .socials {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 3;
     align-self: center;
     justify-content: flex-end;
     font-size: 0.8rem;
