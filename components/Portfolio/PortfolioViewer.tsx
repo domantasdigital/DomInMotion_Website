@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowsPointingOutIcon, ChevronLeftIcon, ChevronRightIcon, MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { PortfolioPiece } from "@/lib/portfolio";
+import { getVimeoUrls } from "@/lib/vimeo";
 import BufferedVideo from "./BufferedVideo";
 import styles from "./Portfolio.module.css";
 
@@ -13,7 +14,12 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
   const [mediaError, setMediaError] = useState(false);
   const [fullscreenError, setFullscreenError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const vimeoRef = useRef<HTMLIFrameElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const usesVimeo = piece.type === "video" && Boolean(piece.vimeoUrl);
+  const vimeo = usesVimeo ? getVimeoUrls(piece.vimeoUrl!) : null;
+  const invalidVimeo = usesVimeo && !vimeo;
+  const originalUrl = vimeo?.watchUrl || piece.src;
 
   function changeZoom(value: number) {
     setZoom(value);
@@ -22,11 +28,14 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
 
   async function fullscreen() {
     const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
-    if (!video) return;
     setFullscreenError(false);
     try {
-      if (video.parentElement?.requestFullscreen) await video.parentElement.requestFullscreen();
-      else if (video.webkitEnterFullscreen) {
+      if (vimeoRef.current) {
+        if (vimeoRef.current.requestFullscreen) await vimeoRef.current.requestFullscreen();
+        else setFullscreenError(true);
+      }
+      else if (video?.parentElement?.requestFullscreen) await video.parentElement.requestFullscreen();
+      else if (video?.webkitEnterFullscreen) {
         video.controls = true;
         video.webkitEnterFullscreen();
       }
@@ -47,12 +56,27 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
             <button type="button" className={styles.iconButton} aria-label="Zoom in" disabled={zoom === 3 || mediaError} onClick={() => changeZoom(Math.min(3, zoom + 0.5))}><MagnifyingGlassPlusIcon aria-hidden="true" /></button>
           </div>
         ) : (
-          <button type="button" className={styles.fullscreenButton} onClick={fullscreen} disabled={mediaError}><ArrowsPointingOutIcon aria-hidden="true" />Fullscreen</button>
+          <div className={styles.videoTools}>
+            {vimeo && <a className={styles.vimeoLink} href={vimeo.watchUrl} target="_blank" rel="noreferrer">Open on Vimeo</a>}
+            <button type="button" className={styles.fullscreenButton} onClick={fullscreen} disabled={mediaError || invalidVimeo}><ArrowsPointingOutIcon aria-hidden="true" />Fullscreen</button>
+          </div>
         )}
       </div>
 
       {piece.type === "video" ? (
-        <BufferedVideo piece={piece} videoRef={videoRef} onError={() => setMediaError(true)} />
+        usesVimeo ? (
+          vimeo && <div className={styles.videoStage}>
+            {/* ViewerMedia is keyed by piece.id: switching/closing removes the player and stops playback. */}
+            <iframe
+              ref={vimeoRef}
+              src={vimeo.embedUrl}
+              title={`${piece.title} — Vimeo video player`}
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media; web-share"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          </div>
+        ) : <BufferedVideo piece={piece} videoRef={videoRef} onError={() => setMediaError(true)} />
       ) : (
         <div ref={viewportRef} className={styles.imageViewport} style={{ aspectRatio: imageRatio }} data-zoom-viewport tabIndex={0} role="region" aria-label="Image viewer. When zoomed, scroll to explore the image.">
           <button
@@ -69,7 +93,7 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
       )}
 
       {piece.type === "image" && <span className={styles.srOnly} role="status">Image zoom: {Math.round(zoom * 100)} percent</span>}
-      {(mediaError || fullscreenError) && <p className={styles.error} role="alert">{mediaError ? "This media couldn't load." : "Fullscreen isn't available here. Try the player's fullscreen control."} <a href={piece.src} target="_blank" rel="noreferrer">Open the original {piece.type === "video" ? "video" : "image"}</a>.</p>}
+      {(invalidVimeo || mediaError || fullscreenError) && <p className={styles.error} role="alert">{invalidVimeo ? "This video's Vimeo link is invalid. Please check its vimeoUrl in lib/portfolio.js." : mediaError ? "This media couldn't load." : "Fullscreen isn't available here. Try the player's fullscreen control."} <a href={originalUrl} target="_blank" rel="noreferrer">Open the original {piece.type === "video" ? "video" : "image"}</a>.</p>}
     </>
   );
 }
@@ -116,7 +140,7 @@ export default function PortfolioViewer({ piece, index, total, onClose, onPrevio
       }}
       onKeyDown={(event) => {
         // Leave native video seeking/volume and zoomed-image scrolling intact.
-        if ((event.target as HTMLElement).closest("video, input, [data-zoom-viewport]")) return;
+        if ((event.target as HTMLElement).closest("video, iframe, input, [data-zoom-viewport]")) return;
         if (event.key === "ArrowLeft" && index > 0) { event.preventDefault(); onPrevious(); }
         if (event.key === "ArrowRight" && index < total - 1) { event.preventDefault(); onNext(); }
       }}

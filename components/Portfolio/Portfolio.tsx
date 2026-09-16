@@ -49,7 +49,7 @@ function Preview({ piece }: { piece: PortfolioPiece }) {
     );
   }
 
-  if (piece.type === "video" && !videoFailed) {
+  if (piece.type === "video" && !piece.vimeoUrl && !videoFailed) {
     return <video ref={videoRef} muted playsInline preload="metadata" aria-label={piece.alt} onError={() => setVideoFailed(true)} />;
   }
 
