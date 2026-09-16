@@ -30,6 +30,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       data-scroll-behavior="smooth"
       className={`${bevan.variable} ${pontanoSans.variable} h-full`}
+      // Tag Assistant injects a root attribute before hydration. Tolerate root-only differences.
+      suppressHydrationWarning
     >
       <body id="top" className="min-h-full flex flex-col">
         <header className="fixed inset-x-0 top-0 z-100">

@@ -226,8 +226,10 @@
   place-items: center;
 }
 
-.channelIcon i {
-  font-size: 1.6rem;
+.channelIcon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
 }
 
 .channelName {

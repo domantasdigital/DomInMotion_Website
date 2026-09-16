@@ -7,8 +7,8 @@ export default function Scene({ onAvatarReady }) {
   // Aim the static camera without controls that capture mobile swipes.
   return (
     <Canvas
-      shadows
       dpr={[1, 2]}
+      resize={{ scroll: false }}
       gl={{
         antialias: true,
         alpha: true,

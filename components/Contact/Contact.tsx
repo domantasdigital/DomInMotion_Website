@@ -6,8 +6,7 @@ import { ArrowUpRightIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import contactArtwork from "@/public/images/7.png";
-import "@fortawesome/fontawesome-free/css/fontawesome.css";
-import "@fortawesome/fontawesome-free/css/brands.css";
+import BrandIcon from "./BrandIcon";
 import styles from "./Contact.module.css";
 
 const contactLinks = [
@@ -16,23 +15,23 @@ const contactLinks = [
     detail: "+370 679 49742",
     href: "https://wa.me/37067949742",
     style: "whatsapp",
-    icon: "fa-whatsapp",
+    icon: "whatsapp",
   },
   {
     name: "LinkedIn",
     detail: "Let’s connect",
     href: "https://www.linkedin.com/in/domantas-dzikavi%C4%8Dius-203175273/",
     style: "linkedin",
-    icon: "fa-linkedin-in",
+    icon: "linkedin",
   },
   {
     name: "Upwork",
     detail: "Let’s work together",
     href: "https://www.upwork.com/freelancers/~015a3d27b3da76ee2f",
     style: "upwork",
-    icon: "fa-upwork",
+    icon: "upwork",
   },
-];
+] as const;
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -254,10 +253,7 @@ export default function Contact() {
                     rel="noopener noreferrer"
                   >
                     <span className={styles.channelIcon}>
-                      <i
-                        className={`fa-brands ${link.icon}`}
-                        aria-hidden="true"
-                      />
+                      <BrandIcon name={link.icon} />
                     </span>
                     <span className={styles.channelName}>{link.name}</span>
                     <span className={styles.channelDetail}>{link.detail}</span>

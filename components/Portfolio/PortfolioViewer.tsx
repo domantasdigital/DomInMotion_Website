@@ -10,7 +10,6 @@ import styles from "./Portfolio.module.css";
 
 function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
   const [zoom, setZoom] = useState(1);
-  const [imageRatio, setImageRatio] = useState(16 / 9);
   const [mediaError, setMediaError] = useState(false);
   const [fullscreenError, setFullscreenError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -78,7 +77,7 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
           </div>
         ) : <BufferedVideo piece={piece} videoRef={videoRef} onError={() => setMediaError(true)} />
       ) : (
-        <div ref={viewportRef} className={styles.imageViewport} style={{ aspectRatio: imageRatio }} data-zoom-viewport tabIndex={0} role="region" aria-label="Image viewer. When zoomed, scroll to explore the image.">
+        <div ref={viewportRef} className={styles.imageViewport} data-zoom-viewport tabIndex={0} role="region" aria-label="Image viewer. When zoomed, scroll to explore the image.">
           <button
             type="button"
             className={styles.imageCanvas}
@@ -87,7 +86,7 @@ function ViewerMedia({ piece }: { piece: PortfolioPiece }) {
             aria-label={zoom > 1 ? "Reset image zoom" : "Zoom image to 200 percent"}
             disabled={mediaError}
           >
-            <Image src={piece.src} alt={piece.alt} fill sizes="100vw" unoptimized onLoad={(event) => setImageRatio(event.currentTarget.naturalWidth / event.currentTarget.naturalHeight)} onError={() => setMediaError(true)} />
+            <Image src={piece.src} alt={piece.alt} fill sizes="100vw" unoptimized onError={() => setMediaError(true)} />
           </button>
         </div>
       )}

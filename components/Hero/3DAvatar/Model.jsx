@@ -49,7 +49,7 @@ const Model = (props) => {
 
     if (isTabletOrLower) {
       const scrollProgress = THREE.MathUtils.clamp(
-        window.scrollY / (window.innerHeight * 0.35),
+        window.scrollY / (size.height * 0.35),
         0,
         1,
       );
